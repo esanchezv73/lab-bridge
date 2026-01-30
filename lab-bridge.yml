@@ -1,0 +1,21 @@
+name: lab-bridge
+topology:
+  nodes:
+    PC-1:
+      kind: linux
+      image: esanchezv/kaliipv6:latest
+      exec:
+        - ip -6 address add 2001:db8:ca01::2/64 dev eth1
+    PC-2:
+      kind: linux
+      image: esanchezv/kaliipv6:latest
+      exec:
+        - ip -6 address add 2001:db8:ca01::3/64 dev eth1
+    
+    br-clab:
+      kind: bridge
+
+  links:
+    - endpoints: ["PC-1:eth1", "br-clab:eth1"]
+    - endpoints: ["PC-2:eth1", "br-clab:eth2"]
+   
